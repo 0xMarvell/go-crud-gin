@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// RegisterBlogRoutes handles all routing for the API.
 func RegisterBlogRoutes(r *gin.Engine) {
 	r.POST("/api/v1/blogposts", controllers.CreatePost)
 	r.GET("/api/v1/blogposts", controllers.GetPosts)
