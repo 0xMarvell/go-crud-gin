@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"fmt"
+	"net/http"
 
 	"github.com/0xMarvell/simple-blog-posts/pkg/config"
 	"github.com/0xMarvell/simple-blog-posts/pkg/models"
@@ -22,14 +23,14 @@ func CreatePost(c *gin.Context) {
 	result := config.DB.Create(&post)
 
 	if result.Error != nil {
-		c.JSON(400, gin.H{
+		c.JSON(http.StatusBadRequest, gin.H{
 			"success": false,
 			"error":   "Bad request: could not create new blog post",
 		})
 		return
 	}
 
-	c.JSON(200, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"success": true,
 		"post":    post,
 	})
@@ -40,7 +41,7 @@ func GetPosts(c *gin.Context) {
 	var posts []models.Post
 	config.DB.Find(&posts)
 
-	c.JSON(200, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"success": true,
 		"posts":   posts,
 	})
@@ -53,14 +54,14 @@ func GetPost(c *gin.Context) {
 
 	config.DB.First(&post, id)
 	if !blogPostExists(id) {
-		c.JSON(404, gin.H{
+		c.JSON(http.StatusNotFound, gin.H{
 			"success": false,
 			"error":   fmt.Sprintf("blog post with id %v does not exist", id),
 		})
 		return
 	}
 
-	c.JSON(200, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"success": true,
 		"post":    post,
 	})
@@ -77,7 +78,7 @@ func UpdatePost(c *gin.Context) {
 
 	config.DB.First(&post, id)
 	if !blogPostExists(id) {
-		c.JSON(404, gin.H{
+		c.JSON(http.StatusNotFound, gin.H{
 			"success": false,
 			"error":   fmt.Sprintf("blog post with id %v does not exist", id),
 		})
@@ -92,7 +93,7 @@ func UpdatePost(c *gin.Context) {
 		Body:  updatedPostPayload.Body,
 	})
 
-	c.JSON(200, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"success": true,
 		"post":    post,
 	})
@@ -104,7 +105,7 @@ func DeletePost(c *gin.Context) {
 
 	config.DB.First(&post, id)
 	if !blogPostExists(id) {
-		c.JSON(404, gin.H{
+		c.JSON(http.StatusNotFound, gin.H{
 			"success": false,
 			"error":   fmt.Sprintf("blog post with id %v does not exist", id),
 		})
@@ -112,7 +113,7 @@ func DeletePost(c *gin.Context) {
 	}
 	config.DB.Delete(&post, id)
 
-	c.JSON(200, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"success": true,
 		"message": "post deleted successfully",
 	})
