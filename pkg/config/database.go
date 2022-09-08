@@ -3,7 +3,7 @@ package config
 import (
 	"fmt"
 
-	"github.com/0xMarvell/go-crud-gin/pkg/utils"
+	"github.com/0xMarvell/simple-blog-posts/pkg/utils"
 	"github.com/spf13/viper"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"

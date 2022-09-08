@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/0xMarvell/go-crud-gin/pkg/config"
+	"github.com/0xMarvell/simple-blog-posts/pkg/config"
 	"github.com/gin-gonic/gin"
 )
 

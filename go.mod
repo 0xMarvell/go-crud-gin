@@ -1,4 +1,4 @@
-module github.com/0xMarvell/go-crud-gin
+module github.com/0xMarvell/simple-blog-posts
 
 go 1.18
 
