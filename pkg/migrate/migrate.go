@@ -5,6 +5,7 @@ import (
 
 	"github.com/0xMarvell/simple-blog-posts/pkg/config"
 	"github.com/0xMarvell/simple-blog-posts/pkg/models"
+	"github.com/0xMarvell/simple-blog-posts/pkg/utils"
 )
 
 func init() {
@@ -13,6 +14,7 @@ func init() {
 }
 
 func main() {
-	config.DB.AutoMigrate(&models.Post{})
+	err := config.DB.AutoMigrate(&models.Post{})
+	utils.CheckErr("Migration failed: ", err)
 	log.Println("Migration successful 👍")
 }

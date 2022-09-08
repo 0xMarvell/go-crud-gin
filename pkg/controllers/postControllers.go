@@ -3,6 +3,7 @@ package controllers
 import (
 	"github.com/0xMarvell/simple-blog-posts/pkg/config"
 	"github.com/0xMarvell/simple-blog-posts/pkg/models"
+	"github.com/0xMarvell/simple-blog-posts/pkg/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -12,7 +13,8 @@ func CreatePost(c *gin.Context) {
 		Title string `json:"title"`
 		Body  string `json:"body"`
 	}
-	c.Bind(&newPost)
+	err := c.Bind(&newPost)
+	utils.CheckErr("c.Bind error: ", err)
 
 	post := models.Post{Title: newPost.Title, Body: newPost.Body}
 	result := config.DB.Create(&post)
