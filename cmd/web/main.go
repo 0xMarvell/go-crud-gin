@@ -1,6 +1,16 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"log"
+
+	"github.com/0xMarvell/go-crud-gin/pkg/config"
+	"github.com/gin-gonic/gin"
+)
+
+func init() {
+	config.LoadEnv()
+	config.Connect()
+}
 
 func main() {
 	r := gin.Default()
@@ -9,5 +19,5 @@ func main() {
 			"message": "pong",
 		})
 	})
-	r.Run() // listen and serve on 0.0.0.0:8080
+	log.Fatal(r.Run())
 }
