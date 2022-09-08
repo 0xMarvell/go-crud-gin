@@ -76,6 +76,13 @@ func UpdatePost(c *gin.Context) {
 	id := c.Param("id")
 
 	config.DB.First(&post, id)
+	if !blogPostExists(id) {
+		c.JSON(404, gin.H{
+			"success": false,
+			"error":   fmt.Sprintf("blog post with id %v does not exist", id),
+		})
+		return
+	}
 
 	err := c.Bind(&updatedPostPayload)
 	utils.CheckErr("c.Bind error: ", err)
@@ -88,6 +95,26 @@ func UpdatePost(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"success": true,
 		"post":    post,
+	})
+}
+
+func DeletePost(c *gin.Context) {
+	id := c.Param("id")
+	var post models.Post
+
+	config.DB.First(&post, id)
+	if !blogPostExists(id) {
+		c.JSON(404, gin.H{
+			"success": false,
+			"error":   fmt.Sprintf("blog post with id %v does not exist", id),
+		})
+		return
+	}
+	config.DB.Delete(&post, id)
+
+	c.JSON(200, gin.H{
+		"success": true,
+		"message": "post deleted successfully",
 	})
 }
 
