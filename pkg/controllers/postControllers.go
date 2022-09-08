@@ -20,12 +20,25 @@ func CreatePost(c *gin.Context) {
 	result := config.DB.Create(&post)
 
 	if result.Error != nil {
-		c.Status(400)
+		c.JSON(400, gin.H{
+			"success": false,
+			"message": "could not create new blog post",
+		})
 		return
 	}
 
 	c.JSON(200, gin.H{
 		"success": true,
 		"post":    post,
+	})
+}
+
+func GetPosts(c *gin.Context) {
+	var posts []models.Post
+	config.DB.Find(&posts)
+
+	c.JSON(200, gin.H{
+		"success": true,
+		"posts":   posts,
 	})
 }
