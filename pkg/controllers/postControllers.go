@@ -99,6 +99,7 @@ func UpdatePost(c *gin.Context) {
 	})
 }
 
+// DeletePost deletes an existing post from the database
 func DeletePost(c *gin.Context) {
 	id := c.Param("id")
 	var post models.Post
