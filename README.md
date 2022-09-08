@@ -1,3 +1,3 @@
 # Simple CRUD API (WORK IN PROGRESS ⚠️)
 
-A simple CRUD API built using Gin-Gonic and GORM
+A simple blog posts API built using Gin-Gonic, PostgreSql and GORM
