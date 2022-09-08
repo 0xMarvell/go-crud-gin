@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"fmt"
+
 	"github.com/0xMarvell/simple-blog-posts/pkg/config"
 	"github.com/0xMarvell/simple-blog-posts/pkg/models"
 	"github.com/0xMarvell/simple-blog-posts/pkg/utils"
@@ -22,7 +24,7 @@ func CreatePost(c *gin.Context) {
 	if result.Error != nil {
 		c.JSON(400, gin.H{
 			"success": false,
-			"message": "could not create new blog post",
+			"error":   "Bad request: could not create new blog post",
 		})
 		return
 	}
@@ -46,8 +48,21 @@ func GetPosts(c *gin.Context) {
 
 // GetPost retrieves single post based on its id.
 func GetPost(c *gin.Context) {
+	var post models.Post
+	id := c.Param("id")
+
+	config.DB.First(&post, id)
+	if !blogPostExists(id) {
+		c.JSON(404, gin.H{
+			"success": false,
+			"error":   fmt.Sprintf("blog post with id %v does not exist", id),
+		})
+		return
+	}
+
 	c.JSON(200, gin.H{
-		"message": "under construction",
+		"success": true,
+		"post":    post,
 	})
 }
 

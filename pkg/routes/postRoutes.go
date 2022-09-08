@@ -8,4 +8,5 @@ import (
 func RegisterBlogRoutes(r *gin.Engine) {
 	r.POST("/api/v1/blogposts", controllers.CreatePost)
 	r.GET("/api/v1/blogposts", controllers.GetPosts)
+	r.GET("/api/v1/blogposts/:id", controllers.GetPost)
 }
