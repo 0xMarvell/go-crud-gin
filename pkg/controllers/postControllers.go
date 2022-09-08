@@ -11,14 +11,14 @@ import (
 
 // CreatePost creates a new blog post.
 func CreatePost(c *gin.Context) {
-	var newPost struct {
+	var newPostPayload struct {
 		Title string `json:"title"`
 		Body  string `json:"body"`
 	}
-	err := c.Bind(&newPost)
+	err := c.Bind(&newPostPayload)
 	utils.CheckErr("c.Bind error: ", err)
 
-	post := models.Post{Title: newPost.Title, Body: newPost.Body}
+	post := models.Post{Title: newPostPayload.Title, Body: newPostPayload.Body}
 	result := config.DB.Create(&post)
 
 	if result.Error != nil {
@@ -68,8 +68,26 @@ func GetPost(c *gin.Context) {
 
 // UpdatePost updates an existing blog post.
 func UpdatePost(c *gin.Context) {
+	var updatedPostPayload struct {
+		Title string `json:"title"`
+		Body  string `json:"body"`
+	}
+	var post models.Post
+	id := c.Param("id")
+
+	config.DB.First(&post, id)
+
+	err := c.Bind(&updatedPostPayload)
+	utils.CheckErr("c.Bind error: ", err)
+
+	config.DB.Model(&post).Updates(models.Post{
+		Title: updatedPostPayload.Title,
+		Body:  updatedPostPayload.Body,
+	})
+
 	c.JSON(200, gin.H{
-		"message": "under construction",
+		"success": true,
+		"post":    post,
 	})
 }
 
