@@ -33,6 +33,7 @@ func CreatePost(c *gin.Context) {
 	})
 }
 
+// GetPosts retrieves all existing blog posts.
 func GetPosts(c *gin.Context) {
 	var posts []models.Post
 	config.DB.Find(&posts)
@@ -41,4 +42,30 @@ func GetPosts(c *gin.Context) {
 		"success": true,
 		"posts":   posts,
 	})
+}
+
+// GetPost retrieves single post based on its id.
+func GetPost(c *gin.Context) {
+	c.JSON(200, gin.H{
+		"message": "under construction",
+	})
+}
+
+// UpdatePost updates an existing blog post.
+func UpdatePost(c *gin.Context) {
+	c.JSON(200, gin.H{
+		"message": "under construction",
+	})
+}
+
+// blogPostExists checks if requested blog post exists in the database.
+func blogPostExists(id string) bool {
+	var post models.Post
+
+	config.DB.First(&post, id)
+	if post.ID == 0 {
+		return false
+	} else {
+		return true
+	}
 }
