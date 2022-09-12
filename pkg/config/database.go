@@ -3,10 +3,10 @@ package config
 import (
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/0xMarvell/simple-blog-posts/pkg/models"
 	"github.com/0xMarvell/simple-blog-posts/pkg/utils"
-	"github.com/spf13/viper"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -18,11 +18,11 @@ func Connect() {
 	LoadEnv()
 
 	var DBConnectErr error
-	host := viper.GetString("DB_HOST")
-	user := viper.GetString("DB_USER")
-	password := viper.GetString("DB_PASSWORD")
-	dbname := viper.Get("DB_NAME")
-	port := viper.GetString("DB_PORT")
+	host := os.Getenv("DB_HOST")
+	user := os.Getenv("DB_USER")
+	password := os.Getenv("DB_PASSWORD")
+	dbname := os.Getenv("DB_NAME")
+	port := os.Getenv("DB_PORT")
 
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Shanghai",
 		host,
