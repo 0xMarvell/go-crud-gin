@@ -61,7 +61,7 @@ func GetPost(c *gin.Context) {
 	if !blogPostExists(id) {
 		c.JSON(http.StatusNotFound, gin.H{
 			"success": false,
-			"error":   fmt.Sprintf("blog post with id %v does not exist", id),
+			"error":   fmt.Sprintf("blog post with id {%v} does not exist", id),
 		})
 		return
 	}
