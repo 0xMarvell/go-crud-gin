@@ -1,4 +1,4 @@
-# Simple CRUD API (WORK IN PROGRESS ⚠️)
+# Blog Posts API
 
 A simple blog API built using:
 
