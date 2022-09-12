@@ -23,19 +23,13 @@ This project makes use of the [viper](https://github.com/spf13/viper) package to
     $ git clone https://github.com/0xMarvell/simple-blog-posts.git
     ```
 
-- Make sure to have [Go](https://go.dev/) installed on your local machine.
+- Make sure to have [Go](https://go.dev/) installed on your local machine
 - Open the code base directory in terminal
-- Run migrations:
-
-    ```go
-    $ go build -o migrate pkg/migrate/migrate.go
-    $ ./migrate
-    ```
-
 - Launch API server:
 
     ```go
-    $ go build -o blog cmd/main.go
-    $ ./blog
+    $ go build -o blogposts cmd/main.go
+    $ ./blogposts
     ```
+
 > Test API using Postman
