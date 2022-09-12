@@ -15,7 +15,7 @@ var DB *gorm.DB
 
 // Connect initializes a database connection.
 func Connect() {
-	LoadEnv()
+	// LoadEnv()
 
 	var DBConnectErr error
 	host := os.Getenv("DB_HOST")
