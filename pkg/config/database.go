@@ -18,9 +18,9 @@ func Connect() {
 	LoadEnv()
 
 	var DBConnectErr error
-	host := viper.GetString("HOST")
-	user := viper.GetString("USER")
-	password := viper.GetString("PASSWORD")
+	host := viper.GetString("DB_HOST")
+	user := viper.GetString("DB_USER")
+	password := viper.GetString("DB_PASSWORD")
 	dbname := viper.Get("DB_NAME")
 	port := viper.GetString("DB_PORT")
 
