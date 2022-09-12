@@ -27,7 +27,7 @@ func CreatePost(c *gin.Context) {
 	}
 	result := config.DB.Create(&post)
 
-	if result.Error != nil {
+	if (result.Error != nil) || (post.Author == "" || post.Body == "" || post.Title == "") {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"success": false,
 			"error":   "Bad request: could not create new blog post",
