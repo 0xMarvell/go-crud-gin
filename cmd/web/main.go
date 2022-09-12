@@ -4,7 +4,6 @@ import (
 	"log"
 
 	"github.com/0xMarvell/simple-blog-posts/pkg/config"
-	"github.com/0xMarvell/simple-blog-posts/pkg/migrate"
 	"github.com/0xMarvell/simple-blog-posts/pkg/routes"
 	"github.com/gin-gonic/gin"
 )
@@ -12,7 +11,7 @@ import (
 func init() {
 	config.LoadEnv()
 	config.Connect()
-	migrate.RunMigrations()
+	config.RunMigrations()
 }
 
 func main() {
