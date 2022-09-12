@@ -2,7 +2,9 @@ package config
 
 import (
 	"fmt"
+	"log"
 
+	"github.com/0xMarvell/simple-blog-posts/pkg/models"
 	"github.com/0xMarvell/simple-blog-posts/pkg/utils"
 	"github.com/spf13/viper"
 	"gorm.io/driver/postgres"
@@ -15,7 +17,7 @@ var DB *gorm.DB
 func Connect() {
 	LoadEnv()
 
-	var err error
+	var DBConnectErr error
 	host := viper.GetString("HOST")
 	user := viper.GetString("USER")
 	password := viper.GetString("PASSWORD")
@@ -29,6 +31,12 @@ func Connect() {
 		dbname,
 		port)
 
-	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
-	utils.CheckErr("could not connect to database: ", err)
+	DB, DBConnectErr = gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	utils.CheckErr("could not connect to database: ", DBConnectErr)
+	log.Println("Database Connection Successful 👍")
+
+	// RUN MIGRATIONS
+	migrationErr := DB.AutoMigrate(&models.Post{})
+	utils.CheckErr("Migration failed: ", migrationErr)
+	log.Println("Migration Successful 👍")
 }
