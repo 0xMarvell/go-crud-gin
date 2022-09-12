@@ -8,7 +8,7 @@ A simple blog API built using:
 
 ## DOCS
 
-Work in progress..
+Read the documentation [here](https://documenter.getpostman.com/view/15381378/2s7YYr852c)
 
 ## Environment Variables
 
