@@ -12,7 +12,7 @@ Work in progress..
 
 ## Environment Variables
 
-This project makes use of the [viper](https://github.com/spf13/viper) package to store environment variables. To run this project on your local machine, you will need to add your Postgres database details as environment variables. This [article](https://blog.logrocket.com/handling-go-configuration-viper/) explains how to use the package.
+This project makes use of the [godotenv](github.com/joho/godotenv) package to store environment variables. To run this project on your local machine, you will need to add your Postgres database details as environment variables. This [article](https://dev.to/schadokar/use-environment-variable-in-your-next-golang-project-2o6c) explains how to use the package.
 > An `.env.example` file has been provided to help with setting up your environment variables.
 
 ## Run API locally
