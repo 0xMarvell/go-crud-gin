@@ -13,13 +13,18 @@ import (
 // CreatePost creates a new blog post.
 func CreatePost(c *gin.Context) {
 	var newPostPayload struct {
-		Title string `json:"title"`
-		Body  string `json:"body"`
+		Title  string `json:"title"`
+		Body   string `json:"body"`
+		Author string `json:"author"`
 	}
 	err := c.Bind(&newPostPayload)
 	utils.CheckErr("c.Bind error: ", err)
 
-	post := models.Post{Title: newPostPayload.Title, Body: newPostPayload.Body}
+	post := models.Post{
+		Title:  newPostPayload.Title,
+		Body:   newPostPayload.Body,
+		Author: newPostPayload.Author,
+	}
 	result := config.DB.Create(&post)
 
 	if result.Error != nil {
@@ -70,8 +75,9 @@ func GetPost(c *gin.Context) {
 // UpdatePost updates an existing blog post.
 func UpdatePost(c *gin.Context) {
 	var updatedPostPayload struct {
-		Title string `json:"title"`
-		Body  string `json:"body"`
+		Title  string `json:"title"`
+		Body   string `json:"body"`
+		Author string `json:"author"`
 	}
 	var post models.Post
 	id := c.Param("id")
@@ -80,7 +86,7 @@ func UpdatePost(c *gin.Context) {
 	if !blogPostExists(id) {
 		c.JSON(http.StatusNotFound, gin.H{
 			"success": false,
-			"error":   fmt.Sprintf("blog post with id %v does not exist", id),
+			"error":   fmt.Sprintf("blog post with id {%v} does not exist", id),
 		})
 		return
 	}
@@ -89,8 +95,9 @@ func UpdatePost(c *gin.Context) {
 	utils.CheckErr("c.Bind error: ", err)
 
 	config.DB.Model(&post).Updates(models.Post{
-		Title: updatedPostPayload.Title,
-		Body:  updatedPostPayload.Body,
+		Title:  updatedPostPayload.Title,
+		Body:   updatedPostPayload.Body,
+		Author: updatedPostPayload.Author,
 	})
 
 	c.JSON(http.StatusOK, gin.H{
@@ -108,7 +115,7 @@ func DeletePost(c *gin.Context) {
 	if !blogPostExists(id) {
 		c.JSON(http.StatusNotFound, gin.H{
 			"success": false,
-			"error":   fmt.Sprintf("blog post with id %v does not exist", id),
+			"error":   fmt.Sprintf("blog post with id {%v} does not exist", id),
 		})
 		return
 	}
