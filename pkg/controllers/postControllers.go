@@ -13,9 +13,9 @@ import (
 // CreatePost creates a new blog post.
 func CreatePost(c *gin.Context) {
 	var newPostPayload struct {
-		Title  string `json:"title"`
-		Body   string `json:"body"`
-		Author string `json:"author"`
+		Title  string `IndentedJSON:"title"`
+		Body   string `IndentedJSON:"body"`
+		Author string `IndentedJSON:"author"`
 	}
 	err := c.Bind(&newPostPayload)
 	utils.CheckErr("c.Bind error: ", err)
@@ -28,14 +28,14 @@ func CreatePost(c *gin.Context) {
 	result := config.DB.Create(&post)
 
 	if (result.Error != nil) || (post.Author == "" || post.Body == "" || post.Title == "") {
-		c.JSON(http.StatusBadRequest, gin.H{
+		c.IndentedJSON(http.StatusBadRequest, gin.H{
 			"success": false,
 			"error":   "Bad request: could not create new blog post",
 		})
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{
+	c.IndentedJSON(http.StatusCreated, gin.H{
 		"success": true,
 		"post":    post,
 	})
@@ -46,7 +46,7 @@ func GetPosts(c *gin.Context) {
 	var posts []models.Post
 	config.DB.Find(&posts)
 
-	c.JSON(http.StatusOK, gin.H{
+	c.IndentedJSON(http.StatusOK, gin.H{
 		"success": true,
 		"posts":   posts,
 	})
@@ -59,14 +59,14 @@ func GetPost(c *gin.Context) {
 
 	config.DB.First(&post, id)
 	if !blogPostExists(id) {
-		c.JSON(http.StatusNotFound, gin.H{
+		c.IndentedJSON(http.StatusNotFound, gin.H{
 			"success": false,
 			"error":   fmt.Sprintf("blog post with id {%v} does not exist", id),
 		})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
+	c.IndentedJSON(http.StatusOK, gin.H{
 		"success": true,
 		"post":    post,
 	})
@@ -75,16 +75,16 @@ func GetPost(c *gin.Context) {
 // UpdatePost updates an existing blog post.
 func UpdatePost(c *gin.Context) {
 	var updatedPostPayload struct {
-		Title  string `json:"title"`
-		Body   string `json:"body"`
-		Author string `json:"author"`
+		Title  string `IndentedJSON:"title"`
+		Body   string `IndentedJSON:"body"`
+		Author string `IndentedJSON:"author"`
 	}
 	var post models.Post
 	id := c.Param("id")
 
 	config.DB.First(&post, id)
 	if !blogPostExists(id) {
-		c.JSON(http.StatusNotFound, gin.H{
+		c.IndentedJSON(http.StatusNotFound, gin.H{
 			"success": false,
 			"error":   fmt.Sprintf("blog post with id {%v} does not exist", id),
 		})
@@ -100,7 +100,7 @@ func UpdatePost(c *gin.Context) {
 		Author: updatedPostPayload.Author,
 	})
 
-	c.JSON(http.StatusOK, gin.H{
+	c.IndentedJSON(http.StatusOK, gin.H{
 		"success": true,
 		"post":    post,
 	})
@@ -113,7 +113,7 @@ func DeletePost(c *gin.Context) {
 
 	config.DB.First(&post, id)
 	if !blogPostExists(id) {
-		c.JSON(http.StatusNotFound, gin.H{
+		c.IndentedJSON(http.StatusNotFound, gin.H{
 			"success": false,
 			"error":   fmt.Sprintf("blog post with id {%v} does not exist", id),
 		})
@@ -121,7 +121,7 @@ func DeletePost(c *gin.Context) {
 	}
 	config.DB.Delete(&post, id)
 
-	c.JSON(http.StatusOK, gin.H{
+	c.IndentedJSON(http.StatusOK, gin.H{
 		"success": true,
 		"message": "post deleted successfully",
 	})
