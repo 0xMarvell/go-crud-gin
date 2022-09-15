@@ -15,8 +15,12 @@ func init() {
 }
 
 func main() {
+	// To run Gin server in debug mode, comment out line 19
+	gin.SetMode(gin.ReleaseMode)
+
 	r := gin.Default()
 	routes.RegisterBlogRoutes(r)
 
+	log.Println("Server is up and running...")
 	log.Fatal(r.Run())
 }

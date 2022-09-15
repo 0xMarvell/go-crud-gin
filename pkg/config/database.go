@@ -42,5 +42,4 @@ func RunMigrations() {
 	migrationErr := DB.AutoMigrate(&models.Post{})
 	utils.CheckErr("Migration failed: ", migrationErr)
 	log.Println("Migration Successful 👍")
-	fmt.Println()
 }
