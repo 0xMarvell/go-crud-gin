@@ -28,8 +28,8 @@ This project makes use of the [godotenv](github.com/joho/godotenv) package to st
 - Launch API server:
 
     ```go
-    $ go build -o blogposts cmd/main.go
+    $ go build -o blogposts cmd/web/main.go
     $ ./blogposts
     ```
 
-> Test API using Postman
+> Test API using Postman, Insomnia or any other API testing client of your choice
